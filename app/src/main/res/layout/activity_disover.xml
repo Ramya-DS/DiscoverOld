@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".discover.DiscoverActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/discover_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/discover_bar_menu"
+        app:title="Discover Movies and TV Shows" />
+
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        app:cardUseCompatPadding="true"-->
+    <!--        card_view:cardCornerRadius="4dp"-->
+    <!--        card_view:cardElevation="5dp"-->
+    <!--        android:layout_margin="25dp"-->
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        class="com.example.discover.DiscoverFragment"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

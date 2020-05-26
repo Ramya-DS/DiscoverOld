@@ -1,0 +1,67 @@
+package com.example.discover.discover
+
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.example.discover.R
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+
+class DiscoverActivity : AppCompatActivity() {
+
+    private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_disover)
+
+        val toolbar: MaterialToolbar = findViewById(R.id.discover_toolbar)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.outlineProvider = null
+        };
+
+        setSupportActionBar(toolbar)
+
+        val contentLayout = findViewById<LinearLayout>(R.id.contentLayout)
+
+        sheetBehavior = BottomSheetBehavior.from(contentLayout)
+        sheetBehavior.isFitToContents = false
+        sheetBehavior.isHideable = false
+        sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+    }
+
+    fun toggleFilters() {
+        if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
+            sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        else
+            sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.discover_bar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter -> {
+                toggleFilters()
+                return true
+            }
+            R.id.reset -> {
+                //reset
+                return true
+            }
+            else ->
+                super.onOptionsItemSelected(item)
+        }
+    }
+
+}
