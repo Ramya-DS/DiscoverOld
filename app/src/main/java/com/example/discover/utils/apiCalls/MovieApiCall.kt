@@ -1,4 +1,4 @@
-package com.example.discover.utils
+package com.example.discover.utils.apiCalls
 
 import com.example.discover.dataModel.moviePreview.MovieResult
 import retrofit2.Call

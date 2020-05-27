@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,21 +13,76 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:menu="@menu/discover_bar_menu"
-        app:title="Discover Movies and TV Shows" />
+        app:title="Discover" />
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="200dp"-->
-    <!--        app:cardUseCompatPadding="true"-->
-    <!--        card_view:cardCornerRadius="4dp"-->
-    <!--        card_view:cardElevation="5dp"-->
-    <!--        android:layout_margin="25dp"-->
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="250dp"-->
+<!--        app:cardUseCompatPadding="true"-->
+<!--        card_view:cardCornerRadius="20dp"-->
+<!--        card_view:cardElevation="10dp">-->
 
-    <fragment
-        android:id="@+id/discoverFragment"
-        class="com.example.discover.DiscoverFragment"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/movieBackdrop"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scaleType="fitXY"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:gravity="center"-->
+<!--                android:text="MOVIES"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--        </FrameLayout>-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/showsCard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="250dp"-->
+<!--        app:cardUseCompatPadding="true"-->
+<!--        card_view:cardCornerRadius="20dp"-->
+<!--        card_view:cardElevation="10dp">-->
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/showsBackdrop"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scaleType="fitXY"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:backgroundTint="#ff7043"-->
+<!--                android:gravity="center"-->
+<!--                android:text="MOVIES"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--        </FrameLayout>-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+        <fragment
+            android:id="@+id/discoverFragment"
+            class="com.example.discover.discover.DiscoverFragment"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
 
 </LinearLayout>

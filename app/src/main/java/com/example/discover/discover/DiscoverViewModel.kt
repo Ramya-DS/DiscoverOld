@@ -10,7 +10,7 @@ import com.example.discover.dataModel.genre.Genres
 import com.example.discover.dataModel.moviePreview.MovieResult
 import com.example.discover.dataModel.tvPreview.TvResult
 import com.example.discover.section.SectionListAdapter
-import com.example.discover.utils.DiscoverApiCall
+import com.example.discover.utils.apiCalls.DiscoverApiCall
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

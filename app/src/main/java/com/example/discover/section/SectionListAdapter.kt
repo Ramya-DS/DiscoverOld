@@ -103,7 +103,7 @@ class SectionListAdapter(
         return when (viewType) {
             0 -> MediaWithTitleViewHolder(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.movie_card_with_title,
+                    R.layout.movie_card_grid_with_title,
                     parent,
                     false
                 )
@@ -117,7 +117,7 @@ class SectionListAdapter(
             )
             else -> MediaWithoutTitleViewHolder(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.movie_card,
+                    R.layout.movie_card_grid,
                     parent,
                     false
                 )

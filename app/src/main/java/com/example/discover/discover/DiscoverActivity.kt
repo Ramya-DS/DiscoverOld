@@ -1,16 +1,21 @@
 package com.example.discover.discover
 
+import android.os.AsyncTask
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.*
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.example.discover.R
+import com.example.discover.utils.LoadBackdropImage
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.lang.ref.WeakReference
+
 
 class DiscoverActivity : AppCompatActivity() {
 
@@ -24,9 +29,19 @@ class DiscoverActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             toolbar.outlineProvider = null
-        };
+        }
 
         setSupportActionBar(toolbar)
+
+//        val movieCard: ImageView = findViewById(R.id.movieBackdrop)
+//        val showsCard: ImageView = findViewById(R.id.showsBackdrop)
+
+
+//        movieCard.setOnClickListener {
+//
+//        }
+
+
 
         val contentLayout = findViewById<LinearLayout>(R.id.contentLayout)
 

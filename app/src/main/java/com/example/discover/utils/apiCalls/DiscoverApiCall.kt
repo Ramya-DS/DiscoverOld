@@ -1,4 +1,4 @@
-package com.example.discover.utils
+package com.example.discover.utils.apiCalls
 
 import com.example.discover.dataModel.genre.GenreResult
 import com.example.discover.dataModel.moviePreview.MovieResult

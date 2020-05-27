@@ -1,4 +1,4 @@
-package com.example.discover
+package com.example.discover.discover
 
 
 import android.os.Bundle
@@ -9,15 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.discover.R
 import com.example.discover.dataModel.genre.Genres
-import com.example.discover.discover.DiscoverActivity
-import com.example.discover.discover.DiscoverViewModel
 import com.example.discover.section.SectionListAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -47,7 +43,7 @@ class DiscoverFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //        viewModel.getMoviesGenres()
 
         //media selection
-        val movieButton = rootView.findViewById<RadioButton>(R.id.movies)
+        val movieButton: RadioButton = rootView.findViewById(R.id.movies)
         val tvButton: RadioButton = rootView.findViewById(R.id.shows)
 
         //chipGroup for genre
@@ -154,17 +150,16 @@ class DiscoverFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d("spinner", "${parent!!.id}, ${view!!.id}, $id")
-        Log.d("from", "${R.id.from == parent.id}")
-        Log.d("to", "${R.id.to == parent.id}")
         if (position == 0)
             return
-
-        if (parent.id == R.id.from) {
-            queryMap["release_date.gte"] = yearList[position].toString()
-        } else if (parent.id == R.id.to) {
-            queryMap["release_date.lte"] = yearList[position].toString()
+        parent?.let {
+            if (parent.id == R.id.from) {
+                queryMap["release_date.gte"] = yearList[position]
+            } else if (parent.id == R.id.to) {
+                queryMap["release_date.lte"] = yearList[position]
+            }
         }
+
     }
 
     private fun setToolTip(view: View, text: String, gravity: Int) {

@@ -4,170 +4,171 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DiscoverFragment">
+    tools:context=".discover.DiscoverFragment">
 
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:layout_marginBottom="60dp">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/movies"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:checked="true"
-                android:text="Movies" />
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/shows"
+                <RadioButton
+                    android:id="@+id/movies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:checked="true"
+                    android:text="Movies" />
+
+                <RadioButton
+                    android:id="@+id/shows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TV Shows" />
+
+            </RadioGroup>
+
+            <!--            <com.google.android.material.chip.ChipGroup-->
+            <!--                android:id="@+id/genre_group"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_margin="10dp"-->
+            <!--                app:chipSpacing="6dp"-->
+            <!--                app:singleLine="false"-->
+            <!--                app:singleSelection="true" />-->
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TV Shows" />
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
-        </RadioGroup>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Release Year Limit"
+                    android:textSize="16sp" />
 
-        <!--            <com.google.android.material.chip.ChipGroup-->
-        <!--                android:id="@+id/genre_group"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_margin="10dp"-->
-        <!--                app:chipSpacing="6dp"-->
-        <!--                app:singleLine="false"-->
-        <!--                app:singleSelection="true" />-->
+                <ImageButton
+                    android:id="@+id/releaseYearLimit"
+                    style="@style/infoButtonStyle" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="From" />
+
+                <Spinner
+                    android:id="@+id/from"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="To" />
+
+                <Spinner
+                    android:id="@+id/to"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/voteAverage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Vote Average" />
+
+                <ImageButton
+                    android:id="@+id/voteAverageInfo"
+                    style="@style/infoButtonStyle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/runtime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Runtime" />
+
+                <ImageButton
+                    android:id="@+id/runtimeInfo"
+                    style="@style/infoButtonStyle" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Year" />
+
+                <ImageButton
+                    android:id="@+id/yearInfo"
+                    style="@style/infoButtonStyle" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Release Year Limit"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:id="@+id/releaseYearLimit"
-                style="@style/infoButtonStyle" />
+                android:layout_gravity="center"
+                android:text="FILTER"
+                app:backgroundTint="@color/colorAccent" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="From" />
-
-            <Spinner
-                android:id="@+id/from"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="To" />
-
-            <Spinner
-                android:id="@+id/to"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/voteAverage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Vote Average" />
-
-            <ImageButton
-                android:id="@+id/voteAverageInfo"
-                style="@style/infoButtonStyle" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/runtime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Runtime" />
-
-            <ImageButton
-                android:id="@+id/runtimeInfo"
-                style="@style/infoButtonStyle" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/year"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Year" />
-
-            <ImageButton
-                android:id="@+id/yearInfo"
-                style="@style/infoButtonStyle" />
-
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/doFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="FILTER"
-            app:backgroundTint="@color/colorAccent" />
-
-    </LinearLayout>
-
-    <!--    </ScrollView>-->
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/contentLayout"
@@ -218,16 +219,16 @@
             android:layout_height="match_parent"
             android:background="#ffffffff">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/mediaList"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scrollbars="vertical" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mediaList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/textView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content" />-->
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
