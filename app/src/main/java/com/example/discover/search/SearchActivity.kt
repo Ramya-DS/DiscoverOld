@@ -129,10 +129,18 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         drawerLayout.setDrawerListener(this)
     }
 
+    private fun displayResultFragment() {
+        displayFragment = SearchResultFragment.newInstance(viewModel.type)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.search_container, displayFragment!!, "RESULT").commit()
+
+        supportFragmentManager.executePendingTransactions()
+    }
+
     private fun displayLoadingFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.search_container, LoadingFragment(), "LOADING")
-            .commit()
+            .replace(R.id.search_container, LoadingFragment(), "LOADING").commit()
     }
 
     private fun removeLoadingFragment() {
@@ -164,12 +172,9 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         removeNoResultFragment()
         removeLoadingFragment()
         removeResultFragment()
-        displayFragment = SearchResultFragment()
+        displayResultFragment()
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.search_container, displayFragment!!, "RESULT").commit()
-
-        Log.d("movies page 1", results.toString())
+        displayFragment!!.adapter.setMovies(results)
 
     }
 
@@ -177,12 +182,11 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         removeNoResultFragment()
         removeLoadingFragment()
         removeResultFragment()
-        displayFragment = SearchResultFragment()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.search_container, displayFragment!!, "RESULT").commit()
+        displayResultFragment()
 
         Log.d("shows page 1", results.toString())
+
+        displayFragment!!.adapter.setShows(results)
 
     }
 
@@ -190,55 +194,52 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         removeNoResultFragment()
         removeLoadingFragment()
         removeResultFragment()
-        displayFragment = SearchResultFragment()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.search_container, displayFragment!!, "RESULT").commit()
+        displayResultFragment()
 
         Log.d("collections page 1", results.toString())
+
+        displayFragment!!.adapter.setCollections(results)
 
     }
 
     fun firstPageOfMultiSearch(results: List<MultiSearch>) {
-
         removeNoResultFragment()
         removeLoadingFragment()
         removeResultFragment()
-        displayFragment = SearchResultFragment()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.search_container, displayFragment!!, "RESULT").commit()
+        displayResultFragment()
 
         Log.d("multi search page 1", results.toString())
+
+        displayFragment!!.adapter.setMix(results)
 
     }
 
     fun displayRestMovies(results: List<MoviePreview>) {
         Log.d("movies page rest", results.toString())
+        displayFragment?.adapter?.appendMovies(results)
     }
 
     fun displayRestShows(results: List<TvPreview>) {
         Log.d("shows page rest", results.toString())
+        displayFragment?.adapter?.appendShows(results)
     }
 
     fun displayRestCollections(results: List<Collection>) {
         Log.d("collections page rest", results.toString())
+        displayFragment?.adapter?.appendCollections(results)
     }
 
     fun displayRestMultiSearch(results: List<MultiSearch>) {
         Log.d("multi search page rest", results.toString())
+        displayFragment?.adapter?.appendMix(results)
     }
 
     private fun initiateSearch(query: String) {
-        viewModel.queryMap["query"] = query
-        Log.d("submit", "${viewModel.queryMap["query"]} ${viewModel.type}")
         displayLoadingFragment()
-        when (viewModel.type) {
-            "multi-search" -> viewModel.getMultiSearchResult(this)
-            "movies" -> viewModel.getSearchedMovies(this)
-            "shows" -> viewModel.getSearchedShows(this)
-            "collections" -> viewModel.getSearchedCollections(this)
-        }
+        viewModel.queryMap["query"] = query
+        viewModel.queryMap["page"]="1"
+        Log.d("submit", "${viewModel.queryMap["query"]} ${viewModel.type}")
+        typeCall()
     }
 
     override fun onDrawerStateChanged(newState: Int) {
@@ -258,6 +259,20 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
             "shows" -> drawerView.findViewById<RadioButton>(R.id.showsFilter).isChecked = true
             "collections" -> drawerView.findViewById<RadioButton>(R.id.collectionsFilter)
                 .isChecked = true
+        }
+    }
+
+    fun fetchMore() {
+        viewModel.queryMap["page"] = (viewModel.queryMap["page"]!!.toInt() + 1).toString()
+        typeCall()
+    }
+
+    private fun typeCall() {
+        when (viewModel.type) {
+            "multi-search" -> viewModel.getMultiSearchResult(this)
+            "movies" -> viewModel.getSearchedMovies(this)
+            "shows" -> viewModel.getSearchedShows(this)
+            "collections" -> viewModel.getSearchedCollections(this)
         }
     }
 }

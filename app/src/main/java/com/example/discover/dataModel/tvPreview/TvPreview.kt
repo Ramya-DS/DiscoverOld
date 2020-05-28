@@ -1,8 +1,11 @@
 package com.example.discover.dataModel.tvPreview
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class TvPreview(
     @SerializedName("original_name") val original_name: String,
     @SerializedName("id") val id: Int,
@@ -17,4 +20,4 @@ data class TvPreview(
     @SerializedName("overview") val overview: String,
     @SerializedName("origin_country") val origin_country: List<String>,
     @SerializedName("popularity") val popularity: Double
-) : Serializable
+) : Serializable, Parcelable

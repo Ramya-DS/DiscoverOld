@@ -1,9 +1,10 @@
 package com.example.discover.dataModel.multiSearch
 
-import com.example.discover.dataModel.genre.Genres
-import com.example.discover.dataModel.multiSearch.KnownFor
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MultiSearch(
     @SerializedName("poster_path") val poster_path: String,
     @SerializedName("release_date") val release_date: String,
@@ -16,6 +17,5 @@ data class MultiSearch(
     @SerializedName("vote_average") val vote_average: Float,
     @SerializedName("first_air_date") val first_air_date: String,
     @SerializedName("profile_path") val profile_path: String,
-    @SerializedName("known_for") val known_for: List<KnownFor>,
     @SerializedName("name") val name: String
-)
+) : Parcelable

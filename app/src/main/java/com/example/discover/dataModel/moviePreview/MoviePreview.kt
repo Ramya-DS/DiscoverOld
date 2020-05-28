@@ -1,8 +1,11 @@
 package com.example.discover.dataModel.moviePreview
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class MoviePreview(
 
     @SerializedName("adult") val adult: Boolean,
@@ -20,5 +23,5 @@ data class MoviePreview(
     @SerializedName("vote_count") val vote_count: Int,
     @SerializedName("popularity") val popularity: Double
 
-) : Serializable
+) : Serializable, Parcelable
 
