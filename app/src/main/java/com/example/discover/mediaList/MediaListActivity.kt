@@ -11,7 +11,7 @@ import com.example.discover.R
 import com.example.discover.section.SectionAdapter
 import com.example.discover.section.SectionListAdapter
 import com.example.discover.dataModel.moviePreview.MoviePreview
-import com.example.discover.dataModel.tvPreview.TvPreview
+import com.example.discover.dataModel.ShowPreview.ShowPreview
 import com.example.discover.section.SectionListViewModel
 import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 class MediaListActivity : AppCompatActivity() {
 
     private lateinit var moviesList: List<MoviePreview>
-    private lateinit var tvList: List<TvPreview>
+    private lateinit var showList: List<ShowPreview>
     var isMovie = true
     lateinit var section: String
 
@@ -52,7 +52,7 @@ class MediaListActivity : AppCompatActivity() {
         if (isMovie)
             adapter.setMovieSectionList(moviesList)
         else
-            adapter.setTvSectionList(tvList)
+            adapter.setTvSectionList(showList)
 
         recyclerView.adapter = adapter
 
@@ -128,9 +128,9 @@ class MediaListActivity : AppCompatActivity() {
             val list = intent.getSerializableExtra("list") as List<MoviePreview>
             moviesList = list
         } else {
-            val list = intent.getSerializableExtra("list") as List<TvPreview>
-            tvList = list
-            Log.d("tv", tvList.size.toString())
+            val list = intent.getSerializableExtra("list") as List<ShowPreview>
+            showList = list
+            Log.d("tv", showList.size.toString())
         }
 
         section = intent.getStringExtra("section")!!

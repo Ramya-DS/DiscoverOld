@@ -3,10 +3,7 @@ package com.example.discover
 import android.app.Application
 import android.graphics.Bitmap
 import androidx.collection.LruCache
-import com.example.discover.utils.apiCalls.DiscoverApiCall
-import com.example.discover.utils.apiCalls.MovieApiCall
-import com.example.discover.utils.apiCalls.SearchApiCall
-import com.example.discover.utils.apiCalls.TvApiCall
+import com.example.discover.utils.apiCalls.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -18,6 +15,7 @@ class DiscoverApplication : Application() {
     lateinit var tvApiCall: TvApiCall
     lateinit var discoverApiCall: DiscoverApiCall
     lateinit var searchApiCall: SearchApiCall
+    lateinit var movieDetailApiCall: MovieDetailApiCall
     lateinit var memoryCache: LruCache<String, Bitmap>
 
     override fun onCreate() {
@@ -43,6 +41,7 @@ class DiscoverApplication : Application() {
         tvApiCall = retrofit.create(TvApiCall::class.java)
         discoverApiCall = retrofit.create(DiscoverApiCall::class.java)
         searchApiCall = retrofit.create(SearchApiCall::class.java)
+        movieDetailApiCall = retrofit.create(MovieDetailApiCall::class.java)
         memoryCache = accessCache()
     }
 

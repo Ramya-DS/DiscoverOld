@@ -20,8 +20,7 @@ import com.example.discover.R
 import com.example.discover.dataModel.collection.Collection
 import com.example.discover.dataModel.moviePreview.MoviePreview
 import com.example.discover.dataModel.multiSearch.MultiSearch
-import com.example.discover.dataModel.tvPreview.TvPreview
-import com.example.discover.section.SectionListAdapter
+import com.example.discover.dataModel.ShowPreview.ShowPreview
 import com.example.discover.utils.LoadPosterImage
 import java.lang.ref.WeakReference
 
@@ -29,7 +28,7 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
     RecyclerView.Adapter<MediaLinearAdapter.MediaLinearViewHolder>() {
 
     private val movies = mutableListOf<MoviePreview>()
-    private val shows = mutableListOf<TvPreview>()
+    private val shows = mutableListOf<ShowPreview>()
     private val mix = mutableListOf<MultiSearch>()
     private val collections = mutableListOf<Collection>()
 
@@ -99,12 +98,12 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
         )
     }
 
-    private fun bindShow(holder: MediaLinearViewHolder, tvPreview: TvPreview) {
+    private fun bindShow(holder: MediaLinearViewHolder, showPreview: ShowPreview) {
         bindDetails(
             holder,
-            tvPreview.poster_path ?: "",
-            tvPreview.name,
-            tvPreview.genre_ids.toString(), tvPreview.vote_average.toString()
+            showPreview.poster_path ?: "",
+            showPreview.name,
+            showPreview.genre_ids.toString(), showPreview.vote_average.toString()
         )
     }
 
@@ -171,7 +170,7 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
 //        notifyDataSetChanged()
     }
 
-    fun setShows(results: List<TvPreview>) {
+    fun setShows(results: List<ShowPreview>) {
         val result = DiffUtil.calculateDiff(
             ShowListDiffUtilCallback(
                 shows,
@@ -225,8 +224,8 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
 //        notifyDataSetChanged()
     }
 
-    fun appendShows(results: List<TvPreview>) {
-        val newResultsList = mutableListOf<TvPreview>()
+    fun appendShows(results: List<ShowPreview>) {
+        val newResultsList = mutableListOf<ShowPreview>()
         newResultsList.addAll(shows)
         newResultsList.addAll(results)
         val result = DiffUtil.calculateDiff(
@@ -307,8 +306,8 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
     }
 
     inner class ShowListDiffUtilCallback(
-        private var oldShows: List<TvPreview>,
-        private var newShows: List<TvPreview>
+        private var oldShows: List<ShowPreview>,
+        private var newShows: List<ShowPreview>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldShows.size

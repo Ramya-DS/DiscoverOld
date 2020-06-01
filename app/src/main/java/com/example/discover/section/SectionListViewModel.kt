@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.discover.DiscoverApplication
-import com.example.discover.dataModel.moviePreview.MovieResult
-import com.example.discover.dataModel.tvPreview.TvResult
+import com.example.discover.dataModel.moviePreview.MoviesList
+import com.example.discover.dataModel.ShowPreview.ShowsList
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,13 +49,13 @@ class SectionListViewModel(private val mApplication: Application) : AndroidViewM
         sendRequestCall(call, page, adapter)
     }
 
-    private fun sendTvRequestCall(call: Call<TvResult>, page: Int, adapter: SectionListAdapter) {
-        call.enqueue(object : Callback<TvResult> {
-            override fun onFailure(call: Call<TvResult>, t: Throwable) {
+    private fun sendTvRequestCall(call: Call<ShowsList>, page: Int, adapter: SectionListAdapter) {
+        call.enqueue(object : Callback<ShowsList> {
+            override fun onFailure(call: Call<ShowsList>, t: Throwable) {
                 Log.d("MovieMain", "Failure ${t.message}")
             }
 
-            override fun onResponse(call: Call<TvResult>, response: Response<TvResult>) {
+            override fun onResponse(call: Call<ShowsList>, response: Response<ShowsList>) {
                 if (response.isSuccessful) {
                     Log.d("result", response.body()!!.results.size.toString())
                     if (page == 1)
@@ -91,13 +91,13 @@ class SectionListViewModel(private val mApplication: Application) : AndroidViewM
 
     }
 
-    private fun sendRequestCall(call: Call<MovieResult>, page: Int, adapter: SectionListAdapter) {
-        call.enqueue(object : Callback<MovieResult> {
-            override fun onFailure(call: Call<MovieResult>, t: Throwable) {
+    private fun sendRequestCall(call: Call<MoviesList>, page: Int, adapter: SectionListAdapter) {
+        call.enqueue(object : Callback<MoviesList> {
+            override fun onFailure(call: Call<MoviesList>, t: Throwable) {
                 Log.d("MovieMain", "Failure ${t.message}")
             }
 
-            override fun onResponse(call: Call<MovieResult>, response: Response<MovieResult>) {
+            override fun onResponse(call: Call<MoviesList>, response: Response<MoviesList>) {
                 if (response.isSuccessful) {
                     Log.d("result", response.body()!!.results.size.toString())
                     if (page == 1)

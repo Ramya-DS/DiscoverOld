@@ -1,12 +1,11 @@
-package com.example.discover.dataModel.tvPreview
+package com.example.discover.dataModel.moviePreview
 
-import com.example.discover.dataModel.tvPreview.TvPreview
 import com.google.gson.annotations.SerializedName
 
-data class TvResult(
+data class MoviesList(
 
     @SerializedName("page") val page: Int,
-    @SerializedName("results") val results: List<TvPreview>,
+    @SerializedName("results") val results: List<MoviePreview>,
     @SerializedName("total_pages") val total_pages: Int,
     @SerializedName("total_results") val total_results: Int
 )

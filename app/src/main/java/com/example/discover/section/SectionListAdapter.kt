@@ -18,8 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.discover.DiscoverApplication
 import com.example.discover.R
 import com.example.discover.dataModel.moviePreview.MoviePreview
-import com.example.discover.dataModel.tvPreview.TvPreview
+import com.example.discover.dataModel.ShowPreview.ShowPreview
 import com.example.discover.mediaList.MediaListActivity
+import com.example.discover.movie.MovieActivity
 import com.example.discover.utils.LoadPosterImage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.Serializable
@@ -32,13 +33,13 @@ class SectionListAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val movieList = mutableListOf<MoviePreview>()
-    private val tvList = mutableListOf<TvPreview>()
+    private val tvList = mutableListOf<ShowPreview>()
 
     lateinit var section: String
 
     inner class MediaWithTitleViewHolder(movieView: View) : RecyclerView.ViewHolder(movieView),
         View.OnClickListener {
-        val id: Int = 0
+        var id: Int = 0
         val posterImage: ImageView = movieView.findViewById(R.id.poster)
         val title: TextView = movieView.findViewById(R.id.title)
         val voting: TextView = movieView.findViewById(R.id.voting)
@@ -50,12 +51,18 @@ class SectionListAdapter(
 
         override fun onClick(v: View?) {
             Toast.makeText(activity.get()?.applicationContext, title.text, Toast.LENGTH_LONG).show()
+            activity.get()
+                ?.startActivity(Intent(activity.get()!!, MovieActivity::class.java).apply {
+                    putExtra("id", id)
+                    putExtra("name", title.text)
+                })
         }
     }
 
     inner class MediaWithoutTitleViewHolder(movieView: View) : RecyclerView.ViewHolder(movieView),
         View.OnClickListener {
-        val id: Int = 0
+        var id: Int = 0
+        var name: String = " "
         val posterImage: ImageView = movieView.findViewById(R.id.poster)
         val voting: TextView = movieView.findViewById(R.id.voting)
         var imageTask: LoadPosterImage? = null
@@ -66,6 +73,12 @@ class SectionListAdapter(
 
         override fun onClick(v: View?) {
             Toast.makeText(v?.context, id.toString(), Toast.LENGTH_LONG).show()
+            activity.get()
+                ?.startActivity(Intent(activity.get()!!, MovieActivity::class.java).apply {
+                    putExtra("id", id)
+                    putExtra("name", name)
+                })
+
         }
     }
 
@@ -86,7 +99,7 @@ class SectionListAdapter(
                 arrayList.addAll(movieList)
                 intent.putExtra("list", arrayList as Serializable)
             } else {
-                val arrayList = arrayListOf<TvPreview>()
+                val arrayList = arrayListOf<ShowPreview>()
                 arrayList.addAll(tvList)
                 intent.putExtra("list", arrayList as Serializable)
             }
@@ -163,7 +176,7 @@ class SectionListAdapter(
         notifyDataSetChanged()
     }
 
-    fun setTvSectionList(newList: List<TvPreview>) {
+    fun setTvSectionList(newList: List<ShowPreview>) {
         tvList.addAll(newList)
         notifyDataSetChanged()
     }
@@ -176,7 +189,6 @@ class SectionListAdapter(
 
     private fun fetchCacheImage(key: String): Bitmap? {
         val memoryCache = (activity.get()?.application as DiscoverApplication).memoryCache
-        Log.d("key", "$key error")
         return memoryCache[key]
     }
 
@@ -212,6 +224,8 @@ class SectionListAdapter(
     private fun onBindMovie(holder: MediaWithTitleViewHolder, position: Int) {
         val movie = movieList[position]
 
+        holder.id = movie.id
+
         if (movie.poster_path != null)
             setPosterImage(holder, movie.poster_path)
         else
@@ -223,6 +237,10 @@ class SectionListAdapter(
 
     private fun onBindMovie(holder: MediaWithoutTitleViewHolder, position: Int) {
         val movie = movieList[position]
+
+        holder.id = movie.id
+
+        holder.name = movie.title
 
         if (movie.poster_path != null)
             setPosterImage(holder, movie.poster_path)
@@ -236,6 +254,8 @@ class SectionListAdapter(
         val show = tvList[position]
         Log.d("show", show.toString())
 
+        holder.id = show.id
+
         if (show.poster_path != null)
             setPosterImage(holder, show.poster_path)
         else
@@ -248,6 +268,8 @@ class SectionListAdapter(
     private fun onBindShow(holder: MediaWithoutTitleViewHolder, position: Int) {
         val show = tvList[position]
         Log.d("show", show.toString())
+
+        holder.id = show.id
 
         if (show.poster_path != null)
             setPosterImage(holder, show.poster_path)
@@ -288,7 +310,7 @@ class SectionListAdapter(
         notifyDataSetChanged()
     }
 
-    fun appendTvSectionList(newList: List<TvPreview>) {
+    fun appendTvSectionList(newList: List<ShowPreview>) {
         tvList.addAll(newList)
         notifyDataSetChanged()
     }

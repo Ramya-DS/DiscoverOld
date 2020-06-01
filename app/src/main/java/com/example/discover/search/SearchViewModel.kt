@@ -2,16 +2,14 @@ package com.example.discover.search
 
 import android.app.Application
 import android.util.Log
-import android.widget.Adapter
 import androidx.lifecycle.AndroidViewModel
 import com.example.discover.DiscoverApplication
 import com.example.discover.dataModel.collection.CollectionResult
-import com.example.discover.dataModel.moviePreview.MovieResult
+import com.example.discover.dataModel.moviePreview.MoviesList
 import com.example.discover.dataModel.multiSearch.MultiSearchResult
-import com.example.discover.dataModel.tvPreview.TvResult
+import com.example.discover.dataModel.ShowPreview.ShowsList
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.CallAdapter
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.BufferedReader
@@ -44,13 +42,13 @@ class SearchViewModel(private val mApplication: Application) : AndroidViewModel(
         sendMultiSearchRequestCall(call, activity)
     }
 
-    private fun sendMovieRequestCall(call: Call<MovieResult>, activity: SearchActivity) {
-        call.enqueue(object : Callback<MovieResult> {
-            override fun onFailure(call: Call<MovieResult>, t: Throwable) {
+    private fun sendMovieRequestCall(call: Call<MoviesList>, activity: SearchActivity) {
+        call.enqueue(object : Callback<MoviesList> {
+            override fun onFailure(call: Call<MoviesList>, t: Throwable) {
                 Log.d("SearchActivity", "Failure ${t.message}")
             }
 
-            override fun onResponse(call: Call<MovieResult>, response: Response<MovieResult>) {
+            override fun onResponse(call: Call<MoviesList>, response: Response<MoviesList>) {
                 if (response.isSuccessful) {
                     val movieResult = response.body()!!
                     if (movieResult.total_results == 0)
@@ -67,13 +65,13 @@ class SearchViewModel(private val mApplication: Application) : AndroidViewModel(
 
     }
 
-    private fun sendShowsRequestCall(call: Call<TvResult>, activity: SearchActivity) {
-        call.enqueue(object : Callback<TvResult> {
-            override fun onFailure(call: Call<TvResult>, t: Throwable) {
+    private fun sendShowsRequestCall(call: Call<ShowsList>, activity: SearchActivity) {
+        call.enqueue(object : Callback<ShowsList> {
+            override fun onFailure(call: Call<ShowsList>, t: Throwable) {
                 Log.d("SearchActivity", "Failure ${t.message}")
             }
 
-            override fun onResponse(call: Call<TvResult>, response: Response<TvResult>) {
+            override fun onResponse(call: Call<ShowsList>, response: Response<ShowsList>) {
                 if (response.isSuccessful) {
                     val tvResult = response.body()!!
                     if (tvResult.total_results == 0)

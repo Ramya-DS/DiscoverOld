@@ -2,7 +2,6 @@ package com.example.discover.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -16,9 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.discover.R
 import com.example.discover.dataModel.collection.Collection
 import com.example.discover.dataModel.moviePreview.MoviePreview
-import com.example.discover.dataModel.moviePreview.MovieResult
 import com.example.discover.dataModel.multiSearch.MultiSearch
-import com.example.discover.dataModel.tvPreview.TvPreview
+import com.example.discover.dataModel.ShowPreview.ShowPreview
 import com.example.discover.utils.LoadingFragment
 import com.example.discover.utils.NoMatchFragment
 import com.google.android.material.button.MaterialButton
@@ -178,7 +176,7 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
     }
 
-    fun firstPageOfShows(results: List<TvPreview>) {
+    fun firstPageOfShows(results: List<ShowPreview>) {
         removeNoResultFragment()
         removeLoadingFragment()
         removeResultFragment()
@@ -219,7 +217,7 @@ class SearchActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         displayFragment?.adapter?.appendMovies(results)
     }
 
-    fun displayRestShows(results: List<TvPreview>) {
+    fun displayRestShows(results: List<ShowPreview>) {
         Log.d("shows page rest", results.toString())
         displayFragment?.adapter?.appendShows(results)
     }
