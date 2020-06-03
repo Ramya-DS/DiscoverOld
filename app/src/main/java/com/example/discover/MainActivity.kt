@@ -2,7 +2,6 @@ package com.example.discover
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -52,16 +51,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("menu", "inside")
         return when (item.itemId) {
             R.id.discover -> {
-                Log.d("menu", "discover")
                 Toast.makeText(this, "Discover", Toast.LENGTH_SHORT)
                 startActivity(Intent(this, DiscoverActivity::class.java))
                 true
             }
             R.id.search -> {
-                Log.d("menu", "search")
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT)
                 startActivity(Intent(this, SearchActivity::class.java))
                 true

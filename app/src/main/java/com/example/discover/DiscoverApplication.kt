@@ -12,10 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class DiscoverApplication : Application() {
 
     lateinit var movieApiCall: MovieApiCall
-    lateinit var tvApiCall: TvApiCall
+    lateinit var showApiCall: ShowApiCall
     lateinit var discoverApiCall: DiscoverApiCall
     lateinit var searchApiCall: SearchApiCall
     lateinit var movieDetailApiCall: MovieDetailApiCall
+    lateinit var showDetailApiCall: ShowDetailApiCall
+    lateinit var seasonApiCall: SeasonApiCall
     lateinit var memoryCache: LruCache<String, Bitmap>
 
     override fun onCreate() {
@@ -38,10 +40,13 @@ class DiscoverApplication : Application() {
             .build()
 
         movieApiCall = retrofit.create(MovieApiCall::class.java)
-        tvApiCall = retrofit.create(TvApiCall::class.java)
+        showApiCall = retrofit.create(ShowApiCall::class.java)
         discoverApiCall = retrofit.create(DiscoverApiCall::class.java)
         searchApiCall = retrofit.create(SearchApiCall::class.java)
         movieDetailApiCall = retrofit.create(MovieDetailApiCall::class.java)
+        showDetailApiCall = retrofit.create(ShowDetailApiCall::class.java)
+        seasonApiCall = retrofit.create(SeasonApiCall::class.java)
+
         memoryCache = accessCache()
     }
 

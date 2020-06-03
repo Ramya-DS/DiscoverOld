@@ -15,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.discover.R
 import com.example.discover.dataModel.credits.Cast
 import com.example.discover.dataModel.credits.Crew
+import com.example.discover.dataModel.showDetail.Network
 import com.example.discover.utils.LoadPosterImage
 import java.lang.ref.WeakReference
 
 
-class CreditAdapter(private val isCrew: Boolean, private val activity: WeakReference<Activity>) :
+class CreditAdapter(
+    private val isCrew: Boolean,
+    private val activity: WeakReference<Activity>
+) :
     RecyclerView.Adapter<CreditAdapter.CreditViewHolder>() {
 
     var crewList = emptyList<Crew>()
@@ -39,7 +43,8 @@ class CreditAdapter(private val isCrew: Boolean, private val activity: WeakRefer
         )
     )
 
-    override fun getItemCount() = if (isCrew) crewList.size else castList.size
+    override fun getItemCount() =
+        if (isCrew) crewList.size else castList.size
 
     override fun onBindViewHolder(holder: CreditViewHolder, position: Int) {
         if (isCrew) {
@@ -50,7 +55,12 @@ class CreditAdapter(private val isCrew: Boolean, private val activity: WeakRefer
                 LoadPosterImage(
                     WeakReference(holder.image),
                     activity
-                ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, crew.profile_path, "120", "120")
+                ).executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR,
+                    crew.profile_path,
+                    "120",
+                    "120"
+                )
             holder.name.text = crew.name
             holder.job.text = crew.job
         } else {
@@ -61,10 +71,16 @@ class CreditAdapter(private val isCrew: Boolean, private val activity: WeakRefer
                 LoadPosterImage(
                     WeakReference(holder.image),
                     activity
-                ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, cast.profile_path, "100", "100")
+                ).executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR,
+                    cast.profile_path,
+                    "100",
+                    "100"
+                )
             holder.name.text = cast.name
             holder.job.text = cast.character
         }
+
     }
 
     private fun setPlaceHolder(imageView: ImageView) {

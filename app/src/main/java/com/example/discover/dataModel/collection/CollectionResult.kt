@@ -1,6 +1,5 @@
 package com.example.discover.dataModel.collection
 
-import com.example.discover.dataModel.collection.Collection
 import com.google.gson.annotations.SerializedName
 
 data class CollectionResult(

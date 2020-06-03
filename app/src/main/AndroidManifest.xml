@@ -12,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".show.SeasonActivity"></activity>
+        <activity android:name=".show.ShowActivity" />
+        <activity android:name=".review.ReviewActivity" />
         <activity android:name=".search.SearchActivity" />
         <activity android:name=".discover.DiscoverActivity" />
         <activity android:name=".movie.MovieActivity" />

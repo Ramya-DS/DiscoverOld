@@ -25,6 +25,7 @@
             android:layout_gravity="end"
             android:layout_margin="5dp"
             android:alpha="0.7"
+            android:background="@drawable/voting_background"
             android:drawableStart="@drawable/ic_star"
             android:elevation="20dp"
             android:textColor="#ffffff" />

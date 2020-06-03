@@ -1,32 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="200dp"
-    android:gravity="center"
-    android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="150dp"-->
+<!--    android:layout_height="200dp"-->
+<!--    android:gravity="center"-->
+<!--    android:orientation="vertical">-->
+<!--    -->
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/creditImage"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:layout_gravity="top|center" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:maxLines="2"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:textColor="#000000" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/job"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:maxLines="2"-->
+<!--        android:textColor="#000000" />-->
+<!--</LinearLayout>-->
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="72dp"
+    tools:context=".movie.InfoDialogFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/creditImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="top|center" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:textColor="#000000" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="1"
+        android:text="Betty GLipin"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/job"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/creditImage"
+        app:layout_constraintTop_toTopOf="@id/creditImage"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/job"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:maxLines="2"
-        android:textColor="#000000" />
-</LinearLayout>
+        android:text="zzzzzzzzzzzzzzzzztttttttttttttttttttttttt"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/creditImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/creditImage"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

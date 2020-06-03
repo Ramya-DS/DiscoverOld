@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.ImageView
-import androidx.fragment.app.FragmentActivity
 import com.example.discover.DiscoverApplication
 import java.io.BufferedInputStream
 import java.io.InputStream
@@ -24,11 +23,13 @@ class LoadPosterImage(
         var bitmap: Bitmap? = null
 
         fileName?.let {
+
             val url = "https://image.tmdb.org/t/p/w185/$it"
             try {
                 inputStream = URL(url).openStream()
                 bitmap = inputStream?.let { createScaledBitmapFromStream(inputStream!!) }
                 (activity.get()?.application as DiscoverApplication).memoryCache.put(it, bitmap!!)
+                Log.d("bitmap", "${bitmap?.height} ${bitmap?.width}")
             } catch (e: Exception) {
                 Log.d("LoadImage", "Error occurred. ${e.message}")
                 this.cancel(true)
@@ -46,8 +47,8 @@ class LoadPosterImage(
 
     private fun createScaledBitmapFromStream(
         s: InputStream,
-        minimumDesiredBitmapWidth: Int = 120,
-        minimumDesiredBitmapHeight: Int = 180
+        minimumDesiredBitmapWidth: Int = 360,
+        minimumDesiredBitmapHeight: Int = 540
     ): Bitmap? {
         val stream = BufferedInputStream(s, 8 * 1024)
         val decodeBitmapOptions = BitmapFactory.Options()

@@ -42,7 +42,7 @@ class SectionListViewModel(private val mApplication: Application) : AndroidViewM
 
     }
 
-    private fun getTvApiCall() = (mApplication as DiscoverApplication).tvApiCall
+    private fun getTvApiCall() = (mApplication as DiscoverApplication).showApiCall
 
     fun setTrendingMovies(page: Int = 1, adapter: SectionListAdapter) {
         val call = getMovieApiCall().getTrendingMovies(page)
@@ -57,7 +57,6 @@ class SectionListViewModel(private val mApplication: Application) : AndroidViewM
 
             override fun onResponse(call: Call<ShowsList>, response: Response<ShowsList>) {
                 if (response.isSuccessful) {
-                    Log.d("result", response.body()!!.results.size.toString())
                     if (page == 1)
                         adapter.setTvSectionList(response.body()!!.results)
                     else
@@ -99,7 +98,6 @@ class SectionListViewModel(private val mApplication: Application) : AndroidViewM
 
             override fun onResponse(call: Call<MoviesList>, response: Response<MoviesList>) {
                 if (response.isSuccessful) {
-                    Log.d("result", response.body()!!.results.size.toString())
                     if (page == 1)
                         adapter.setMovieSectionList(response.body()!!.results)
                     else

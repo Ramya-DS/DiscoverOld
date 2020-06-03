@@ -415,7 +415,6 @@ class MediaLinearAdapter(private val type: String, private val activity: WeakRef
 
     private fun fetchCacheImage(key: String): Bitmap? {
         val memoryCache = (activity.get()?.application as DiscoverApplication).memoryCache
-        Log.d("key", "$key error")
         return memoryCache[key]
     }
 

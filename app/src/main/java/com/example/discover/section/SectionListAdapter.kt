@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.AsyncTask
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.example.discover.dataModel.moviePreview.MoviePreview
 import com.example.discover.dataModel.ShowPreview.ShowPreview
 import com.example.discover.mediaList.MediaListActivity
 import com.example.discover.movie.MovieActivity
+import com.example.discover.show.ShowActivity
 import com.example.discover.utils.LoadPosterImage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.Serializable
@@ -51,11 +51,14 @@ class SectionListAdapter(
 
         override fun onClick(v: View?) {
             Toast.makeText(activity.get()?.applicationContext, title.text, Toast.LENGTH_LONG).show()
+            val activityClass =
+                if (isMovie) MovieActivity::class.java else ShowActivity::class.java
             activity.get()
-                ?.startActivity(Intent(activity.get()!!, MovieActivity::class.java).apply {
+                ?.startActivity(Intent(activity.get()!!, activityClass).apply {
                     putExtra("id", id)
                     putExtra("name", title.text)
                 })
+
         }
     }
 
@@ -73,8 +76,10 @@ class SectionListAdapter(
 
         override fun onClick(v: View?) {
             Toast.makeText(v?.context, id.toString(), Toast.LENGTH_LONG).show()
+            val activityClass =
+                if (isMovie) MovieActivity::class.java else ShowActivity::class.java
             activity.get()
-                ?.startActivity(Intent(activity.get()!!, MovieActivity::class.java).apply {
+                ?.startActivity(Intent(activity.get()!!, activityClass).apply {
                     putExtra("id", id)
                     putExtra("name", name)
                 })
@@ -103,7 +108,6 @@ class SectionListAdapter(
                 arrayList.addAll(tvList)
                 intent.putExtra("list", arrayList as Serializable)
             }
-            Log.d("intent", isMovie.toString())
             intent.putExtra("isMovie", isMovie)
             intent.putExtra("section", section)
             activity.get()!!.startActivity(intent)
@@ -252,8 +256,6 @@ class SectionListAdapter(
 
     private fun onBindShow(holder: MediaWithTitleViewHolder, position: Int) {
         val show = tvList[position]
-        Log.d("show", show.toString())
-
         holder.id = show.id
 
         if (show.poster_path != null)
@@ -267,9 +269,10 @@ class SectionListAdapter(
 
     private fun onBindShow(holder: MediaWithoutTitleViewHolder, position: Int) {
         val show = tvList[position]
-        Log.d("show", show.toString())
 
         holder.id = show.id
+
+        holder.name = show.name
 
         if (show.poster_path != null)
             setPosterImage(holder, show.poster_path)

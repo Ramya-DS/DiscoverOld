@@ -47,8 +47,6 @@ class MainTabFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
         ).get(modelClass)
 
-        Log.d("ismovie",isMovie.toString())
-
         val sectionRecyclerView = rootView.findViewById<RecyclerView>(R.id.sectionList)
         sectionRecyclerView.layoutManager = LinearLayoutManager(context)
         sectionRecyclerView.setHasFixedSize(true)

@@ -3,13 +3,8 @@ package com.example.discover.utils
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.AsyncTask
-import android.util.Log
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
-import com.example.discover.DiscoverApplication
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.lang.ref.WeakReference
@@ -30,12 +25,9 @@ class LoadBackdropImage(
         fileName?.let {
 
             val url = "https://image.tmdb.org/t/p/w780/$it"
-            Log.d("params", "$fileName\t$width\t$height\t$url")
 //            try {
             inputStream = URL(url).openStream()
             bitmap = inputStream?.let { createScaledBitmapFromStream(inputStream!!, width, height) }
-            Log.d("inputStream", inputStream.toString())
-            Log.d("bitmap", "${bitmap?.width}, ${bitmap?.height}")
 //            (activity.get()?.application as DiscoverApplication).memoryCache.put(it, bitmap!!)
 //            } catch (e: Exception) {
 //                Log.d("LoadImage", "Error occurred. ${e.message} ${e.stackTrace}")
@@ -73,7 +65,6 @@ class LoadBackdropImage(
 
             val bitmap: Bitmap?
             if (scale > 1) {
-                Log.d("scale", "$scale")
                 decodeBitmapOptions.inSampleSize = 1.coerceAtLeast(scale)
                 bitmap = BitmapFactory.decodeStream(stream, null, decodeBitmapOptions)
 

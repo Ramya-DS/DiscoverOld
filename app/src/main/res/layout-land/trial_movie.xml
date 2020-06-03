@@ -85,7 +85,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
-                                android:drawableStart="@drawable/ic_star_color"
+                                android:drawableStart="@drawable/ic_tmdb"
+                                android:textStyle="bold"
                                 app:layout_constraintBottom_toTopOf="@id/title_movie"
                                 app:layout_constraintStart_toEndOf="@id/posterCard"
                                 app:layout_constraintTop_toTopOf="@id/posterCard" />
@@ -151,7 +152,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_back_outline" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

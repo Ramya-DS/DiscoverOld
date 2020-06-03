@@ -12,7 +12,6 @@
         app:navigationIcon="@drawable/ic_back" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginEnd="10dp"
         android:id="@+id/info_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

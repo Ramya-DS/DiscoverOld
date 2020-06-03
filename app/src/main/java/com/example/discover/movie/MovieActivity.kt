@@ -1,5 +1,7 @@
 package com.example.discover.movie
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -22,6 +24,7 @@ import com.example.discover.dataModel.keywords.Keyword
 import com.example.discover.dataModel.movieDetail.MovieDetails
 import com.example.discover.dataModel.moviePreview.MoviePreview
 import com.example.discover.dataModel.reviews.Review
+import com.example.discover.review.ReviewActivity
 import com.example.discover.section.SectionListAdapter
 import com.example.discover.utils.LoadPosterImage
 import com.google.android.material.appbar.AppBarLayout
@@ -34,7 +37,7 @@ import java.lang.ref.WeakReference
 import kotlin.math.abs
 
 
-class MovieActivity : AppCompatActivity() {
+class MovieActivity : AppCompatActivity(), OnReviewClickListener, OnUrlSelectedListener {
 
     private var id = 0
 
@@ -74,10 +77,11 @@ class MovieActivity : AppCompatActivity() {
         appBarLayout = findViewById(R.id.appbar_movie_detail)
         collapsingToolbarLayout = findViewById(R.id.collapsing_movie_detail)
         toolbar = findViewById(R.id.toolbar_movie)
-        toolbar.setNavigationOnClickListener {
-            this.finish()
-        }
         setSupportActionBar(toolbar)
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,15 +92,16 @@ class MovieActivity : AppCompatActivity() {
     }
 
     private fun collapsingToolbarChanges() {
-        val icon = ContextCompat.getDrawable(this, R.drawable.ic_back)
         appBarLayout.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val infoItem = menu?.findItem(R.id.info_menu)
-            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
-                collapsingToolbarLayout.title = movieName
-                infoItem?.isVisible = true
-            } else if (verticalOffset == 0) {
-                collapsingToolbarLayout.title = " "
-                infoItem?.isVisible = false
+            appBarLayout.post {
+                if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                    collapsingToolbarLayout.title = movieName
+                    infoItem?.isVisible = true
+                } else if (verticalOffset == 0) {
+                    collapsingToolbarLayout.title = " "
+                    infoItem?.isVisible = false
+                }
             }
         })
     }
@@ -149,17 +154,19 @@ class MovieActivity : AppCompatActivity() {
 
     fun setMovieDetails(movieDetails: MovieDetails) {
         Log.d("movie", "$movieDetails")
-        infoDialog = InfoDialogFragment.newInstance(createInfo(movieDetails))
+        infoDialog = InfoDialogFragment.newInfoInstance(createInfo(movieDetails))
         backdropImage.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         if (movieDetails.images?.backdrops != null) {
-            backdropImage.adapter = ImageAdapter(movieDetails.images.backdrops, WeakReference(this))
+            backdropImage.adapter =
+                ImageAdapter(true, movieDetails.images.backdrops, WeakReference(this))
         } else
             backdropImage.adapter = ImageAdapter(
+                true,
                 listOf(ImageDetails(0.0, movieDetails.backdrop_path, 0, 0)),
                 WeakReference(this)
             )
-        TabLayoutMediator(tabLayout, backdropImage) { tab, position ->
+        TabLayoutMediator(tabLayout, backdropImage) { tab, _ ->
             backdropImage.setCurrentItem(tab.position, true)
         }.attach()
 
@@ -171,7 +178,7 @@ class MovieActivity : AppCompatActivity() {
         title.text = movieDetails.title
         rating.text = movieDetails.vote_average.toString()
         tagLine.text = movieDetails.tagline
-        val text = "${movieDetails.runtime} minutes"
+        val text = " ${movieDetails.runtime} minutes"
         runtime.text = text
         overview.text = movieDetails.overview
         status.text = movieDetails.status
@@ -247,13 +254,15 @@ class MovieActivity : AppCompatActivity() {
         val reviewsList: RecyclerView = findViewById(R.id.reviews)
         reviewsList.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         reviewsList.setHasFixedSize(true)
-        reviewsList.adapter = ReviewAdapter(reviews)
+        reviewsList.adapter = ReviewAdapter(reviews, this)
     }
 
     private fun createInfo(movieDetails: MovieDetails): List<InfoClass> {
         val list = mutableListOf<InfoClass>()
-        list.add(InfoClass(R.drawable.ic_revenue, movieDetails.revenue.toString(), "Revenue"))
-        list.add(InfoClass(R.drawable.ic_homepage, movieDetails.homepage, "Homepage"))
+        if (movieDetails.revenue != 0)
+            list.add(InfoClass(R.drawable.ic_revenue, movieDetails.revenue.toString(), "Revenue"))
+        if (movieDetails.homepage.trim().isNotEmpty())
+            list.add(InfoClass(R.drawable.ic_homepage, movieDetails.homepage, "Homepage"))
         list.add(
             InfoClass(
                 R.drawable.ic_language,
@@ -261,8 +270,16 @@ class MovieActivity : AppCompatActivity() {
                 "Original Language"
             )
         )
-        list.add(InfoClass(R.drawable.ic_release_date, movieDetails.release_date, "Release Date"))
-        list.add(InfoClass(R.drawable.ic_budget, movieDetails.budget.toString(), "Budget"))
+        if (movieDetails.release_date.trim().isNotEmpty())
+            list.add(
+                InfoClass(
+                    R.drawable.ic_release_date,
+                    movieDetails.release_date,
+                    "Release Date"
+                )
+            )
+        if (movieDetails.budget != 0)
+            list.add(InfoClass(R.drawable.ic_budget, movieDetails.budget.toString(), "Budget"))
 
         return list
     }
@@ -270,10 +287,36 @@ class MovieActivity : AppCompatActivity() {
     private fun createLinkInfo(externalID: ExternalID): List<InfoClass> {
         val list = mutableListOf<InfoClass>()
 
-        list.add(InfoClass(R.drawable.ic_imdb, externalID.imdbId, "IMDB ID"))
-        list.add(InfoClass(R.drawable.ic_instagram, externalID.instagramId, "Instagram ID"))
-        list.add(InfoClass(R.drawable.ic_facebook, externalID.facebookId, "Facebook ID"))
-        list.add(InfoClass(R.drawable.ic_twitter, externalID.twitterId, "Twitter ID"))
+        list.add(
+            InfoClass(
+                R.drawable.ic_imdb,
+                "https://www.imdb.com/title/${externalID.imdbId}",
+                "IMDB ID"
+            )
+        )
+        externalID.instagramId?.let {
+            list.add(
+                InfoClass(
+                    R.drawable.ic_instagram,
+                    "https://www.instagram.com/$it",
+                    "Instagram ID"
+                )
+            )
+        }
+
+        Log.d("null", "https://www.instagram.com/${externalID.instagramId}")
+        externalID.facebookId?.let {
+            list.add(
+                InfoClass(
+                    R.drawable.ic_facebook,
+                    "https://www.facebook.com/$it",
+                    "Facebook ID"
+                )
+            )
+        }
+        externalID.twitterId?.let {
+            list.add(InfoClass(R.drawable.ic_twitter, "https://twitter.com/$it", "Twitter ID"))
+        }
 
         return list
     }
@@ -283,7 +326,19 @@ class MovieActivity : AppCompatActivity() {
     }
 
     fun setExternalIds(externalID: ExternalID) {
-        linkDialog = InfoDialogFragment.newInstance(createLinkInfo(externalID))
+        Log.d("ids", externalID.toString())
+        linkDialog = InfoDialogFragment.newInfoInstance(createLinkInfo(externalID))
+    }
+
+    override fun onReviewClicked(review: Review) {
+        val intent = Intent(this, ReviewActivity::class.java)
+        intent.putExtra("review", review)
+        startActivity(intent)
+    }
+
+    override fun onUrlSelected(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
 }

@@ -165,7 +165,7 @@ class MovieViewModel(private val mApplication: Application) : AndroidViewModel(m
     }
 
 
-    fun fetchErrorMessage(error: ResponseBody): String {
+    private fun fetchErrorMessage(error: ResponseBody): String {
         var reader: BufferedReader? = null
         val sb = StringBuilder()
         try {

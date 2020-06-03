@@ -1,5 +1,9 @@
 package com.example.discover.movie
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.discover.R
 
-class InfoAdapter(private val infoList: List<InfoClass>) :
+class InfoAdapter(
+    private val infoList: List<InfoClass>,
+    private val onUrlSelectedListener: OnUrlSelectedListener
+) :
     RecyclerView.Adapter<InfoAdapter.InfoViewHolder>() {
 
     class InfoViewHolder(infoView: View) : RecyclerView.ViewHolder(infoView) {
@@ -38,9 +45,31 @@ class InfoAdapter(private val infoList: List<InfoClass>) :
         )
         if (info.content == null || info.content.trim().isEmpty())
             holder.content.text = "-"
-        else
-            holder.content.text = info.content
+        else {
+            if (info.title.contains("homepage", true) || info.title.contains("ID")) {
+                holder.content.text = highlightUrl(info.content)
+                holder.content.movementMethod = LinkMovementMethod.getInstance()
+            } else
+                holder.content.text = info.content
+        }
+
 
         holder.title.text = info.title
+    }
+
+    private fun highlightUrl(text: String): SpannableString {
+        val spannableString = SpannableString(text)
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                onUrlSelectedListener.onUrlSelected(text)
+            }
+        }
+        spannableString.setSpan(
+            clickableSpan,
+            0,
+            text.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        return spannableString
     }
 }
